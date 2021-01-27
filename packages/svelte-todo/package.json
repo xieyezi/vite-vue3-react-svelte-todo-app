@@ -7,7 +7,6 @@
   "author": "xieyezi",
   "license": "ISC",
   "devDependencies": {
-    "@rollup/plugin-typescript": "^8.1.0",
     "rollup-plugin-svelte": "^7.1.0",
     "svelte": "^3.32.0",
     "svelte-preprocess": "^4.6.3",
