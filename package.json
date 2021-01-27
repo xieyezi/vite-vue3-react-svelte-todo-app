@@ -1,0 +1,16 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "vue3-dev": "cd packages/vue3-todo && yarn dev",
+    "vue3-build": "cd packages/vue3-todo && yarn build",
+    "react-dev": "cd packages/react-todo && yarn dev",
+    "react-build": "cd packages/react-todo && yarn build"
+  },
+  "devDependencies": {
+    "lerna": "^3.22.1"
+  }
+}
