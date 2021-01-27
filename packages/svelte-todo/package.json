@@ -1,0 +1,17 @@
+{
+  "name": "svelte-todo",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite"
+  },
+  "author": "xieyezi",
+  "license": "ISC",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^8.1.0",
+    "rollup-plugin-svelte": "^7.1.0",
+    "svelte": "^3.32.0",
+    "svelte-preprocess": "^4.6.3",
+    "typescript": "^4.1.3",
+    "vite": "^2.0.0-beta.50"
+  }
+}
