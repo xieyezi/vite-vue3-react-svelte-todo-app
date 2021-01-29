@@ -58,6 +58,9 @@ export default defineComponent({
 }
 .done {
 	background: #f6f6f6;
-	text-decoration: line-through;
+	label{
+		text-decoration:line-through;
+	}
+	
 }
 </style>

@@ -2,7 +2,7 @@ import { reactive } from 'vue'
 
 export interface TodoItemType {
 	id: number
-	done: false
+	done: boolean
 	content: string
 }
 
