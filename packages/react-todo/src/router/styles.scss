@@ -1,0 +1,16 @@
+#nav {
+	padding-top: 60px;
+	padding-bottom: 20px;
+	span {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+	a {
+		font-size: 20px;
+		font-weight: bold;
+		color: #2c3e50;
+		&.router-link-exact-active {
+			color: white;
+		}
+	}
+}

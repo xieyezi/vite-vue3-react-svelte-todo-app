@@ -40,7 +40,7 @@ export default defineComponent({
 		function addNewTodoItem() {
 			store.action.addNewTodoItem({
 				done: false,
-				id: todoList.value.length + 1,
+				id: todoList.value.length,
 				content: newItemContent.value
 			})
 			newItemContent.value = ''

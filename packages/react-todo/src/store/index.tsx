@@ -1,19 +1,21 @@
-import { createStore } from './state'
-import { reducer } from './reducer'
+import { createStore, StateType } from './state'
+import { ActionType, reducer } from './reducer'
 import React, { useReducer, createContext } from 'react'
 
-const state = createStore()
-export const TodoContext = createContext({})
+const store = createStore()
+
+export type TodoContextType = {
+	state: StateType
+	dispatch: React.Dispatch<ActionType>
+}
+
+export const TodoContext = createContext<any>({})
 
 const TodoProvider: React.FC = (props) => {
-	const [todoList, dispatch] = useReducer(reducer, state)
-	const contextValue = [todoList, dispatch]
+	const [state, dispatch] = useReducer(reducer, store)
+	const contextValue = { state, dispatch }
 
-	return (
-		<TodoContext.Provider value={contextValue}>
-			{props.children}
-		</TodoContext.Provider>
-	)
+	return <TodoContext.Provider value={contextValue}>{props.children}</TodoContext.Provider>
 }
 
 export default TodoProvider
