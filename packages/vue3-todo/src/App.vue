@@ -55,7 +55,7 @@ body {
 	color: #2c3e50;
 }
 #nav {
-	padding-top: 200px;
+	padding-top: 60px;
 	padding-bottom: 20px;
 	span {
 		padding-left: 15px;
@@ -78,7 +78,7 @@ body {
 }
 @media screen and (max-width: 500px) {
 	#nav {
-		padding-top: 100px;
+		padding-top: 40px;
 		padding-bottom: 20px;
 	}
 }

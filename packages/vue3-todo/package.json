@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vuedx-typecheck . && vite build",
+    "build": "vite build",
     "serve": "vite preview",
     "format": "prettier --write \"./**/*.ts\" \"./**/*.vue\" "
   },
