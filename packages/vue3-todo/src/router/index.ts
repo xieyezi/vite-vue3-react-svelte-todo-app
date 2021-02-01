@@ -9,7 +9,8 @@ const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/finish',
 		name: 'Finish',
-		component: () => import(/* webpackChunkName: "about" */ '../views/Finish.vue')
+		component: () =>
+			import(/* webpackChunkName: "about" */ '../views/Finish.vue')
 	}
 ]
 
