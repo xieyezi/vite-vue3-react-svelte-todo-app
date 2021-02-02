@@ -1,12 +1,16 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte'
 	import type { TodoItemType } from '../store'
+
 	export let todoItem: TodoItemType
 
+	const dispatch = createEventDispatcher()
+
 	function statusChage() {
-		console.log(todoItem)
+		dispatch('changeTodoItem', todoItem)
 	}
 	function deleteTodoItem() {
-		console.log(todoItem)
+		dispatch('delteTodoItem', todoItem)
 	}
 </script>
 

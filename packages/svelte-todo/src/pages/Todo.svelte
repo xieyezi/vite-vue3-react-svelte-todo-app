@@ -1,21 +1,49 @@
 <script lang="ts">
-	import { store } from '../store'
+	import { useStore } from '../store'
 	import TodoItem from '../components/TodoItme.svelte'
-	import type { TodoItemType } from '../store'
-	import TodoItme from '../components/TodoItme.svelte'
+	import type { TodoItemType } from '../store/state'
 
+	const store = useStore()
+	const { state, action } = store
+	let newItemContent = ''
 	let todoList: Array<TodoItemType> = []
-	store.subscribe((state) => {
+
+	state.subscribe((state) => {
 		todoList = state.todoList
 	})
+
+	function addNewTodoItem(e:KeyboardEvent) {
+		console.log(e.key)
+		// if (newItemContent !== '') {
+		// 	action.addNewTodoItem({
+		// 		done: false,
+		// 		id: todoList.length,
+		// 		content: newItemContent
+		// 	})
+		// }
+	}
+
+	function changeTodoItem(e: CustomEvent) {
+		console.log(e.detail)
+	}
+
+	function delteTodoItem(e: CustomEvent) {
+		console.log(e.detail)
+	}
 </script>
 
 <div class="todo">
 	<div class="card">
-		<input class="input" type="text" placeholder="your new todo" />
+		<input
+			class="input"
+			type="text"
+			placeholder="your new todo"
+			bind:value={newItemContent}
+			on:keyup={addNewTodoItem}
+		/>
 		<div class="card-content">
 			{#each todoList as item}
-				<TodoItme todoItem={item} />
+				<TodoItem todoItem={item} on:changeTodoItem={changeTodoItem} on:delteTodoItem={delteTodoItem} />
 			{/each}
 		</div>
 	</div>

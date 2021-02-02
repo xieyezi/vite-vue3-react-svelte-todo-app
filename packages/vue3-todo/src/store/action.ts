@@ -14,12 +14,12 @@ function delteTodoItem(state: VuexState) {
 
 function changeTodoItemStatus(state: VuexState) {
 	return (todoItem: TodoItemType) => {
-		let originTodoList = [...state.todoList]
-		originTodoList.map((item) => {
+		let list = [...state.todoList]
+		list.map((item) => {
 			if (item.id === todoItem.id) item.done = !item.done
 			return item
 		})
-		state.todoList = [...originTodoList]
+		state.todoList = [...list]
 	}
 }
 

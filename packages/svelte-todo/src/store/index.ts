@@ -1,23 +1,12 @@
-import { writable } from 'svelte/store'
+import { createAction } from './action'
+import { createStore } from './state'
 
-export interface TodoItemType {
-	id: number
-	done: boolean
-	content: string
+const state = createStore()
+const action = createAction(state)
+
+export const useStore = () => {
+	return {
+		state,
+		action
+	}
 }
-
-export type StateType = {
-	todoList: Array<TodoItemType>
-}
-
-const state: StateType = {
-	todoList: [
-		{
-			id: 0,
-			done: false,
-			content: 'your first todo'
-		}
-	]
-}
-
-export const store = writable(state)
