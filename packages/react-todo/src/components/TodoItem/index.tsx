@@ -18,7 +18,7 @@ const TodoItem: React.FC<IProps> = ({ todoItem, changeTodoItem, delteTodoItem })
 	return (
 		<div className={todoItem.done ? 'item done' : 'item'}>
 			<div>
-				<input type="checkbox" onChange={statusChage} />
+				<input type="checkbox" checked={todoItem.done} onChange={statusChage} />
 				<label className="checkbox">{todoItem.content}</label>
 			</div>
 			<button className="delete is-small" onClick={deleteTodoItem} />

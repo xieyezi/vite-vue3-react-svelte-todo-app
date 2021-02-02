@@ -1,0 +1,13 @@
+.item {
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	margin-bottom: 10px;
+	background: #f6f6f6;
+	padding: 10px;
+	border-radius: 5px;
+	input {
+		margin-right: 10px;
+	}
+}

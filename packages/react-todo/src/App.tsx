@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import TodoProvier from './store'
 import Router from './router'
 import './App.scss'

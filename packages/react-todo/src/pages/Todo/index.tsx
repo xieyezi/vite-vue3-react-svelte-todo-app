@@ -7,22 +7,21 @@ import './styles.scss'
 const Todo: React.FC = () => {
 	const [newItemContent, setNewItemContet] = useState('')
 	const { state, dispatch } = useContext<TodoContextType>(TodoContext)
-	const { todoList } = state
 
 	function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
 		if (e.target.value) setNewItemContet(e.target.value)
 	}
 	function addNewTodoItem(e: React.KeyboardEvent<HTMLInputElement>) {
-		if (e.code === 'Enter') {
-			const { todoList } = state
+		if (e.code === 'Enter' && newItemContent !== '') {
 			dispatch({
 				type: 'NEW_TODO_ITEM',
 				todoItem: {
 					done: false,
-					id: todoList.length,
+					id: state.todoList.length,
 					content: newItemContent
 				}
 			})
+			setNewItemContet('')
 		}
 	}
 	function changeTodoItem(todoItem: TodoItemType) {
@@ -49,7 +48,7 @@ const Todo: React.FC = () => {
 					onKeyUp={addNewTodoItem}
 				/>
 				<div className="card-content">
-					{todoList.map((item: TodoItemType) => {
+					{state.todoList.map((item: TodoItemType) => {
 						return (
 							<TodoItem key={item.id} todoItem={item} changeTodoItem={changeTodoItem} delteTodoItem={delteTodoItem} />
 						)

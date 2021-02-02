@@ -19,14 +19,12 @@ export const reducer = (state: StateType, action: ActionType) => {
 			}
 		case 'UPDATE_TODO_ITEM':
 			let list = [...state.todoList]
-			list.map((item) => {
+			list = list.map((item) => {
 				if (item.id === action.todoItem.id) {
 					item.done = !item.done
-					console.log(item)
 				}
 				return item
 			})
-			console.log(list)
 			return {
 				...state,
 				todoList: list
