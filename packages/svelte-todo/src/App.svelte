@@ -1,35 +1,37 @@
 <script lang="ts">
-	let name = 'vite + svelte'
-	import logo from './assets/logo.svg'
+	import Router from './router/index.svelte'
 </script>
 
-<main>
-	<img alt="Vue logo" src={logo} />
-	<h1>Hello {name}!</h1>
-	<p>
-		Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn
-		how to build Svelte apps.
-	</p>
-</main>
+<div id="app">
+	<Router />
+	<div id="notification" class="notification is-primary">
+		<p>
+			This is a todo app built on vite, vue3, react, svelte, bluma, if you want to view the source code, please click
+			<strong><a href="https://github.com/xieyezi/vite-vue3-react-svelte-todo-app" target="view_window">Here</a></strong
+			>
+			.
+		</p>
+		<p>
+			<strong><a href="https://github.com/xieyezi" target="view_window">xieyezi</a></strong>
+			all rights reserved.
+		</p>
+	</div>
+</div>
 
 <style>
-	main {
+	#app {
+		min-height: 100vh;
+		background: linear-gradient(to bottom, #2ebf91, #8360c3);
+		font-family: Avenir, Helvetica, Arial, sans-serif;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
 		text-align: center;
-		padding: 1em;
-		max-width: 340px;
-		margin: 0 auto;
-		margin-top: 60px;
-	}
-
-	h1 {
 		color: #2c3e50;
-		font-size: 40px;
-		font-weight: 100;
 	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
+	#notification {
+		position: absolute;
+		bottom: 10px;
+		font-size: 18px;
+		width: 100%;
 	}
 </style>
