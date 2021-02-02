@@ -2,6 +2,12 @@
 
 one todo-app with vite + vue3 + react + svelte.
 
+### preview
+
+vue: https://vite-vue3-todo.netlify.app
+
+react: https://vite-react-todo.netlify.app
+
 ### quick Start 
 ```
 cd vite-vue3-react-svelte-todo && yarn 
