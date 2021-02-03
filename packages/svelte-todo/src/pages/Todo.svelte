@@ -12,23 +12,23 @@
 		todoList = state.todoList
 	})
 
-	function addNewTodoItem(e:KeyboardEvent) {
-		console.log(e.key)
-		// if (newItemContent !== '') {
-		// 	action.addNewTodoItem({
-		// 		done: false,
-		// 		id: todoList.length,
-		// 		content: newItemContent
-		// 	})
-		// }
+	function addNewTodoItem(e: KeyboardEvent) {
+		if (e.code === 'Enter' && newItemContent !== '') {
+			action.addNewTodoItem({
+				done: false,
+				id: todoList.length,
+				content: newItemContent
+			})
+			newItemContent = ''
+		}
 	}
 
-	function changeTodoItem(e: CustomEvent) {
-		console.log(e.detail)
-	}
+	// function changeTodoItem(e: CustomEvent) {
+	// 	action.changeTodoItemStatus(e.detail)
+	// }
 
 	function delteTodoItem(e: CustomEvent) {
-		console.log(e.detail)
+		action.delteTodoItem(e.detail)
 	}
 </script>
 
@@ -43,7 +43,7 @@
 		/>
 		<div class="card-content">
 			{#each todoList as item}
-				<TodoItem todoItem={item} on:changeTodoItem={changeTodoItem} on:delteTodoItem={delteTodoItem} />
+				<TodoItem todoItem={item} on:delteTodoItem={delteTodoItem} />
 			{/each}
 		</div>
 	</div>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte'
-	import type { TodoItemType } from '../store'
+	import type { TodoItemType } from '../store/state'
 
 	export let todoItem: TodoItemType
 

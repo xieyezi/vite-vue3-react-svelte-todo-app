@@ -1,16 +1,24 @@
 <script>
-	import { Router, Link, Route } from 'svelte-routing'
+	import { Router, Link, Route, link } from 'svelte-routing'
 	import Todo from '../pages/Todo.svelte'
 	import Finish from '../pages/Finish.svelte'
 
 	export let url = ''
+
+	function getProps({ location, href, isPartiallyCurrent, isCurrent }) {
+		const isActive = href === '/' ? isCurrent : isPartiallyCurrent || isCurrent
+		if (isActive) {
+			return { class: 'link active' }
+		}
+		return { class: 'link' }
+	}
 </script>
 
 <Router {url}>
 	<div id="nav">
-		<Link to="/">Todo List</Link>
+		<Link to="/" {getProps}>Todo List</Link>
 		<span>|</span>
-		<Link to="/finish">Finish List</Link>
+		<Link to="/finish" {getProps}>Finish List</Link>
 	</div>
 	<div>
 		<Route path="finish" component={Finish} />
@@ -26,14 +34,18 @@
 			padding-left: 15px;
 			padding-right: 15px;
 		}
-		a {
-			font-size: 20px;
-			font-weight: bold;
-			color: #2c3e50;
-			&.router-link-exact-active {
-				color: white;
-			}
+	   
+	}
+	:global(.link) {
+		font-size: 20px;
+		font-weight: bold;
+		color: #2c3e50;
+		:global(.link:hover ){
+			color: white;
 		}
+	}
+	:global(.active) {
+		color: white;
 	}
 	@media screen and (max-width: 500px) {
 		#nav {

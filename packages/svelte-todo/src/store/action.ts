@@ -23,26 +23,28 @@ function delteTodoItem(state: Writable<StateType>) {
 	}
 }
 
-function changeTodoItemStatus(state: Writable<StateType>) {
-	return (todoItem: TodoItemType) => {
-		state.update((state) => {
-			let list = [...state.todoList]
-			list.map((item) => {
-				if (item.id === todoItem.id) item.done = !item.done
-				return item
-			})
-			return {
-				...state,
-				todoList: [...list]
-			}
-		})
-	}
-}
+// svelte do not change state by action ,beacase all of them is reactivity,it's amazing!
+
+// function changeTodoItemStatus(state: Writable<StateType>) {
+// 	return (todoItem: TodoItemType) => {
+// 		state.update((state) => {
+// 			let list = [...state.todoList]
+// 			// list.map((item) => {
+// 			// 	if (item.id === todoItem.id) item.done = !item.done
+// 			// 	return item
+// 			// })
+// 			return {
+// 				...state,
+// 				todoList: [...list]
+// 			}
+// 		})
+// 	}
+// }
 
 export function createAction(state: Writable<StateType>) {
 	return {
 		addNewTodoItem: addNewTodoItem(state),
-		delteTodoItem: delteTodoItem(state),
-		changeTodoItemStatus: changeTodoItemStatus(state)
+		delteTodoItem: delteTodoItem(state)
+		// changeTodoItemStatus: changeTodoItemStatus(state)
 	}
 }
