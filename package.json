@@ -9,6 +9,8 @@
     "vue3-build": "cd packages/vue3-todo && yarn build",
     "react-dev": "cd packages/react-todo && yarn dev",
     "react-build": "cd packages/react-todo && yarn build",
+    "svelte-dev": "cd packages/svelte-todo && yarn dev",
+    "svelte-build": "cd packages/svelte-todo && yarn build",
     "format": "prettier --write \"packages/**/*.js\" \"packages/**/*.ts\" \"packages/**/*.vue\" \"packages/**/*.tsx\" \"packages/**/*.svelte\"",
     "commit": "git-cz"
   },
