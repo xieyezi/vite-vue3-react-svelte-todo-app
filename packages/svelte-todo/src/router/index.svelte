@@ -1,5 +1,5 @@
 <script>
-	import { Router, Link, Route, link } from 'svelte-routing'
+	import { Router, Link, Route } from 'svelte-routing'
 	import Todo from '../pages/Todo.svelte'
 	import Finish from '../pages/Finish.svelte'
 
@@ -27,6 +27,9 @@
 </Router>
 
 <style lang="scss">
+	:global(a:hover ){
+			color: gray;
+	}
 	#nav {
 		padding-top: 60px;
 		padding-bottom: 20px;
@@ -40,9 +43,6 @@
 		font-size: 20px;
 		font-weight: bold;
 		color: #2c3e50;
-		:global(.link:hover ){
-			color: white;
-		}
 	}
 	:global(.active) {
 		color: white;
