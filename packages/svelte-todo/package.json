@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
     "format": "prettier --write \"./**/*.ts\" \"./**/*.svelte\" "
   },
   "author": "xieyezi",
