@@ -8,6 +8,8 @@ vue: https://vite-vue3-todo.netlify.app
 
 react: https://vite-react-todo.netlify.app
 
+svelte: https://vite-svelte-todo.netlify.app
+
 ### quick Start 
 ```
 cd vite-vue3-react-svelte-todo && yarn 
