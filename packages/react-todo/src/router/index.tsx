@@ -1,16 +1,17 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom'
+import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom'
 import Todo from '../pages/Todo'
 import Finish from '../pages/Finish'
 import './styles.scss'
+
 
 const Router: React.FC = () => {
 	return (
 		<BrowserRouter>
 			<div id="nav">
-				<Link to="/">Todo List</Link>
+				<NavLink to="/" exact activeClassName="active">Todo List</NavLink>
 				<span>|</span>
-				<Link to="/finish">Finish List</Link>
+				<NavLink to="/finish" exact activeClassName="active">Finish List</NavLink>
 			</div>
 
 			<Switch>
