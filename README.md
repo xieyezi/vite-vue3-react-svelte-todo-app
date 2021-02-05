@@ -4,7 +4,7 @@ one todo-app with vite + vue3 + react + svelte.
 
 ### preview
 
-vue: https://vite-vue3-todo.netlify.app
+vue3: https://vite-vue3-todo.netlify.app
 
 react: https://vite-react-todo.netlify.app
 

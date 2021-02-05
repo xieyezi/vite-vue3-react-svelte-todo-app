@@ -8,24 +8,24 @@
 		<router-view />
 		<div id="notification" class="notification is-primary">
 			<p>
-				This is a todo app built on vite, vue3, react, svelte, bluma, if you
-				want to view the source code, please click
-				<strong
-					><a
-						href="https://github.com/xieyezi/vite-vue3-react-svelte-todo-app"
-						target="view_window"
-						>Here</a
-					></strong
-				>
-				.
+				<strong>
+					<a href="https://vite-vue3-todo.netlify.app" target="view_window"> Vue3 Version </a>
+				</strong>
+				,
+				<strong>
+					<a href="https://vite-react-todo.netlify.app" target="view_window"> React Version </a>
+				</strong>
+				,
+				<strong>
+					<a href="https://vite-svelte-todo.netlify.app" target="view_window"> Svelte Version </a>
+				</strong>
 			</p>
 			<p>
-				<strong
-					><a href="https://github.com/xieyezi" target="view_window"
-						>xieyezi</a
-					></strong
-				>
-				all rights reserved.
+				This is one Todo App build With Vite and Vue3,if you want to view the source code, please click
+				<strong>
+					<a href="https://github.com/xieyezi/vite-vue3-react-svelte-todo-app" target="view_window"> Here </a>
+				</strong>
+				.
 			</p>
 		</div>
 	</div>

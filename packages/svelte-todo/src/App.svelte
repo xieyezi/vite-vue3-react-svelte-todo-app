@@ -6,18 +6,9 @@
 	<Router />
 	<div id="notification" class="notification is-primary">
 		<p>
-			<strong
-				><a href="https://github.com/xieyezi/vite-vue3-react-svelte-todo-app" target="view_window">vue3 version</a
-				></strong
-			>,
-			<strong
-				><a href="https://github.com/xieyezi/vite-vue3-react-svelte-todo-app" target="view_window">react version</a
-				></strong
-			>,
-			<strong
-				><a href="https://github.com/xieyezi/vite-vue3-react-svelte-todo-app" target="view_window">svelte version</a
-				></strong
-			>
+			<strong><a href="https://vite-vue3-todo.netlify.app" target="view_window">Vue3 Version</a></strong>,
+			<strong><a href="https://vite-react-todo.netlify.app" target="view_window">React Version</a></strong>,
+			<strong><a href="https://vite-svelte-todo.netlify.app" target="view_window">Svelte Version</a></strong>
 		</p>
 		<p>
 			This is one Todo App build With Vite and Svelte,if you want to view the source code, please click<strong

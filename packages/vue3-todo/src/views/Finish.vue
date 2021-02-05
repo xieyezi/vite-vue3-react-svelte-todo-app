@@ -3,11 +3,7 @@
 		<div class="card">
 			<div class="card-content">
 				<div class="card-content">
-					<FinishItem
-						v-for="item in finishList"
-						:key="item.id"
-						:finishItem="item"
-					/>
+					<FinishItem v-for="item in finishList" :key="item.id" :finishItem="item" />
 				</div>
 			</div>
 		</div>
@@ -26,9 +22,7 @@ export default defineComponent({
 	},
 	setup() {
 		const store = useStore()
-		const finishList = computed(() => store.state.todoList).value.filter(
-			(item) => item.done
-		)
+		const finishList = computed(() => store.state.todoList).value.filter((item) => item.done)
 
 		return {
 			finishList
