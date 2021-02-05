@@ -34,7 +34,6 @@
 			padding-left: 15px;
 			padding-right: 15px;
 		}
-	   
 	}
 	:global(.link) {
 		font-size: 20px;

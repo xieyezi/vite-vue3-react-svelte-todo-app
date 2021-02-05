@@ -6,14 +6,23 @@
 	<Router />
 	<div id="notification" class="notification is-primary">
 		<p>
-			This is a todo app built on vite, vue3, react, svelte, bluma, if you want to view the source code, please click
-			<strong><a href="https://github.com/xieyezi/vite-vue3-react-svelte-todo-app" target="view_window">Here</a></strong
+			<strong
+				><a href="https://github.com/xieyezi/vite-vue3-react-svelte-todo-app" target="view_window">vue3 version</a
+				></strong
+			>,
+			<strong
+				><a href="https://github.com/xieyezi/vite-vue3-react-svelte-todo-app" target="view_window">react version</a
+				></strong
+			>,
+			<strong
+				><a href="https://github.com/xieyezi/vite-vue3-react-svelte-todo-app" target="view_window">svelte version</a
+				></strong
 			>
-			.
 		</p>
 		<p>
-			<strong><a href="https://github.com/xieyezi" target="view_window">xieyezi</a></strong>
-			all rights reserved.
+			This is one Todo App build With Vite and Svelte,if you want to view the source code, please click<strong
+				><a href="https://github.com/xieyezi/vite-vue3-react-svelte-todo-app" target="view_window">Here</a></strong
+			>.
 		</p>
 	</div>
 </div>
@@ -34,7 +43,7 @@
 		font-size: 18px;
 		width: 100%;
 	}
-	:global(a:hover ){
-			color: gray;
+	:global(a:hover) {
+		color: gray;
 	}
 </style>
