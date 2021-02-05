@@ -34,4 +34,7 @@
 		font-size: 18px;
 		width: 100%;
 	}
+	:global(a:hover ){
+			color: gray;
+	}
 </style>

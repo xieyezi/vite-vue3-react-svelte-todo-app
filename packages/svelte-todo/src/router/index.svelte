@@ -27,9 +27,6 @@
 </Router>
 
 <style lang="scss">
-	:global(a:hover ){
-			color: gray;
-	}
 	#nav {
 		padding-top: 60px;
 		padding-bottom: 20px;
