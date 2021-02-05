@@ -65,7 +65,7 @@ yarn svelte-dev
 
 刚刚上面说了，我们想要知道vite对于现在各种前端框架的支持程度，所以我决定分别使用`vue3`、`react`、`svelte`来实现我们的`Todo App`。同时值得一提的是，虽然这篇文章是我为了测试`vite`而专门写的，但是通过这篇文章，你能够从头到尾的学会，如何将`vite`与`vue3`、`react`、`svelte`结合起来使用。
 
-但是你可能会好奇，为什么我这里同时也要尝试将`vite` 和 `svelte`结合起来？因为`svelte 这个前端框架新秀成为了2020最受欢迎的前端框架，所以我想一并尝试一下。
+但是你可能会好奇，为什么我这里同时也要尝试将`vite` 和 `svelte`结合起来？因为`svelte` 这个前端框架新秀成为了2020最受欢迎的前端框架，所以我想一并尝试一下。
 
 ![fornt-end.png](https://i.loli.net/2021/02/05/8O7rWpJExD1QbBz.png)
 
@@ -73,5 +73,29 @@ yarn svelte-dev
 
 说了这么多，让我们一起开始吧！
 
+哦对了，在开始之前，我们还得有个准备。既然我们分别测试了`vue3`、`react`、`svelte`，那我们也同时对他们做一个比较吧。我会从以下两个维度来进行比较：
+- 开发体验
+- 构建包的体积
+
+> 其中开发体验包括对于`typescript`的支持、`状态管理`、`路由管理`等。
+
+基于这个目的，我们得保持一定的公平性，意思是我们在进行功能实现时，尽可能少的借助框架本身之外的工具。比如我们在实现`状态管理`时，我们尽量使用框架本身自带的功能来实现。
+
+好了，带着这两个目的，我们一起操作起来吧！
 #### vue3
 
+为了将三个`Todo App`都放在一个工程下面，我们采用了 [`lerna`](https://github.com/lerna/lerna) 来管理我们的三个`Todo App`。
+
+```bash
+# install lerna and init project
+$ npm install lerna -g
+$ mkdir vite-vue3-react-svelte-todo && cd vite-vue3-react-svelte-todo
+$ lerna init
+```
+
+接着我们进入`packages`下面新建我们的`vue3-todo App`。由于vite本身是由vue的作者实现的，所以毋庸置疑，`vite`+`vue3`肯定是有`template`的:
+
+```bash
+$ cd packages
+$ yarn create @vitejs/app vue3-todo --template vue-ts
+```
