@@ -82,7 +82,7 @@ yarn svelte-dev
 基于这个目的，我们得保持一定的公平性，意思是我们在进行功能实现时，尽可能少的借助框架本身之外的工具。比如我们在实现`状态管理`时，我们尽量使用框架本身自带的功能来实现。
 
 好了，带着这两个目的，我们一起操作起来吧！
-#### vue3
+#### Vue3
 
 为了将三个`Todo App`都放在一个工程下面，我们采用了 [`lerna`](https://github.com/lerna/lerna) 来管理我们的三个`Todo App`。
 
@@ -93,9 +93,41 @@ $ mkdir vite-vue3-react-svelte-todo && cd vite-vue3-react-svelte-todo
 $ lerna init
 ```
 
-接着我们进入`packages`下面新建我们的`vue3-todo App`。由于vite本身是由vue的作者实现的，所以毋庸置疑，`vite`+`vue3`肯定是有`template`的:
+接着我们进入`packages`下面新建我们的`vue3-todo App`。由于`vite`本身是由`vue`的作者实现的，所以毋庸置疑，`vite`+`vue3`肯定是有`template`的:
 
 ```bash
 $ cd packages
 $ yarn create @vitejs/app vue3-todo --template vue-ts
 ```
+
+然后进入到`vue3-todo`里面，新建`router`、`store`、`views`、`components`。这些太常见不过了，笔者就不作过多介绍了。我们先来看看项目结构：
+```
+.
+├── index.html
+├── node_modules
+├── package.json
+├── public
+│   └── favicon.ico
+├── src
+│   ├── App.vue
+│   ├── assets
+│   │   └── logo.png
+│   ├── components
+│   │   ├── FinishItem.vue
+│   │   └── TodoItem.vue
+│   ├── main.ts
+│   ├── router
+│   │   └── index.ts
+│   ├── store
+│   │   ├── action.ts
+│   │   ├── index.ts
+│   │   └── state.ts
+│   ├── views
+│   │   ├── Finish.vue
+│   │   └── Todo.vue
+│   └── vue-shim.d.ts
+├── tsconfig.json
+└── vite.config.ts
+```
+
+对于路由，我们采用了`vue-router 4.x` 的版本，这里着重说一下
