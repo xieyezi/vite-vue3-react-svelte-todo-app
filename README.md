@@ -31,6 +31,8 @@ yarn svelte-dev
 ![1.png](https://i.loli.net/2021/02/05/ZAnfoHDNy35eMm7.png)
 
 ### 说在前面
+首先祝大家新年快乐！
+
 测试不同的前端构建工具一直以来是笔者的一个奇怪的嗜好，因为说实话,`webpack` 真的太难用了。上手成本高、插件鱼龙混杂、最难受的就是启动`dev`太慢，这些都是它的缺点。直到`vite`出现，笔者才原来前端开发可以如此丝滑。
 ### `Vite`是什么？
 
@@ -73,7 +75,7 @@ yarn svelte-dev
 
 说了这么多，让我们一起开始吧！
 
-哦对了，在开始之前，我们还得有个准备。既然我们分别测试了`vue3`、`react`、`svelte`，那我们也同时对他们做一个比较吧。我会从以下两个维度来进行比较：
+哦对了，在开始之前，还得说明一下。既然我们分别测试了`vue3`、`react`、`svelte`，那我们也同时对他们做一个比较吧。我会从以下两个维度来进行比较：
 - 开发体验
 - 构建包的体积
 
@@ -129,5 +131,236 @@ $ yarn create @vitejs/app vue3-todo --template vue-ts
 ├── tsconfig.json
 └── vite.config.ts
 ```
+现在vite2 为了适应更多的前端框架，所以它不会自动支持`vue3`，我们得安装一个官方提供的插件`@vitejs/plugin-vue`，并将其作为`vite` 的 `plugins`:
+```ts
+// vite.config.ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
 
-对于路由，我们采用了`vue-router 4.x` 的版本，这里着重说一下
+// https://vitejs.dev/config/
+export default defineConfig({
+	plugins: [vue()]
+})
+
+```
+这里说一下，路由采用了最新的路由库：`vue-router 4.x` 。这个目录一眼便知，我们将`todo list`的状态管理，放到了`store`里面来管理。这里想着重讲一下状态管理，我们为了公平公正，所以我们这里不借助于`vuex`，既然现在`vue3`是基于`vue-composition-api`的，那我们可以利用这个特性来实现我们的状态管理。 首先我们需要创建一个`state`：
+```ts
+// store/state.ts
+import { reactive } from 'vue'
+
+export interface TodoItemType {
+	id: number
+	done: boolean
+	content: string
+}
+
+export type VuexState = {
+	todoList: Array<TodoItemType>
+}
+
+const state: VuexState = {
+	todoList: [
+		{
+			id: 0,
+			done: false,
+			content: 'your first todo'
+		}
+	]
+}
+
+export const createStore = () => {
+	return reactive(state)
+}
+
+```
+接着我们需要定义一些`action`用来变更`state`，这其中包括待办事项的增删改查：
+```ts
+// store/action.ts
+import { VuexState, TodoItemType } from './state'
+
+function addNewTodoItem(state: VuexState) {
+	return (newItem: TodoItemType) => {
+		state.todoList = [...state.todoList, newItem]
+	}
+}
+
+function delteTodoItem(state: VuexState) {
+	return (item: TodoItemType) => {
+		state.todoList = state.todoList.filter((e) => e.id !== item.id)
+	}
+}
+
+function changeTodoItemStatus(state: VuexState) {
+	return (todoItem: TodoItemType) => {
+		let list = [...state.todoList]
+		list.map((item) => {
+			if (item.id === todoItem.id) item.done = !item.done
+			return item
+		})
+		state.todoList = [...list]
+	}
+}
+
+export function createAction(state: VuexState) {
+	return {
+		addNewTodoItem: addNewTodoItem(state),
+		delteTodoItem: delteTodoItem(state),
+		changeTodoItemStatus: changeTodoItemStatus(state)
+	}
+}
+```
+
+然后我们将其统一暴露出去：
+```ts
+// store/index.ts
+import { readonly } from 'vue'
+import { createAction } from './action'
+import { createStore } from './state'
+
+const state = createStore()
+const action = createAction(state)
+
+export const useStore = () => {
+	return {
+		state: readonly(state),
+		action: readonly(action)
+	}
+}
+
+```
+这样，我们就完美的利用`vue3` 的最新特性实现状态管理，且不需要`vuex`了，最棒的是，这样做我们还完美的实现了`typescript`支持。
+> 有关利用vue3实现自身状态管理的更多内容，请查看这篇文章：[vuex4都beta了，vuex5还会远吗？](https://juejin.cn/post/6920118166224666632)
+
+好了，最重要的部分说完了，我们来看看`Todo.vue`:
+```ts
+<template>
+	<div class="todo">
+		<div class="card">
+			<input
+				class="input"
+				type="text"
+				placeholder="your new todo"
+				v-model="newItemContent"
+				@keyup.enter="addNewTodoItem"
+			/>
+			<div class="card-content">
+				<TodoItem
+					v-for="item in todoList"
+					:key="item.id"
+					:todoItem="item"
+					@changeTodoItem="changeTodoItem"
+					@delteTodoItem="delteTodoItem"
+				/>
+			</div>
+		</div>
+	</div>
+</template>
+
+<script lang="ts">
+import { defineComponent, computed, ref } from 'vue'
+import TodoItem from '../components/TodoItem.vue'
+import { useStore } from '../store/index'
+import { TodoItemType } from '../store/state'
+
+export default defineComponent({
+	name: 'Todo',
+	components: {
+		TodoItem
+	},
+	setup() {
+		let newItemContent = ref('')
+		const store = useStore()
+		const todoList = computed(() => store.state.todoList)
+
+		function addNewTodoItem() {
+			store.action.addNewTodoItem({
+				done: false,
+				id: todoList.value.length,
+				content: newItemContent.value
+			})
+			newItemContent.value = ''
+		}
+
+		function changeTodoItem(todoItem: TodoItemType) {
+			store.action.changeTodoItemStatus(todoItem)
+		}
+
+		function delteTodoItem(todoItem: TodoItemType) {
+			store.action.delteTodoItem(todoItem)
+		}
+
+		return {
+			todoList,
+			newItemContent,
+			addNewTodoItem,
+			delteTodoItem,
+			changeTodoItem
+		}
+	}
+})
+</script>
+....
+```
+
+很简单，对吧。在这个页面，我们取出`state`里面的`todo list`，渲染了每个`todo item`。同时还提供了一个`Input`输入框，利用`v-model`绑定了输入框的值。当我们按下回车键时，就会触发我们提供的`addNewTodoItem`方法。这个方法做了两件事情，取出`Input`的值，然后通过`action` `dispatch`到我们的`store`，从而新增一个`todo item`。 
+
+同时我们还提供了更新`item`和删除`item`的方法，当我们勾选`item`前面的`check box`时，就表明我们完成了该待办事项。在`TodoItem.vue`里面，当我们点击`item`的`check box`时，通过`emit`的方式，将变更提交到父组件`Todo.vue`，不过在`vue3`里面我们稍微有点改变，我们得通过`setup`的第二个参数拿到`emit`：
+```ts
+// components/TodoItem.vue
+...
+setup(props, ctx) {
+		const { todoItem } = props
+
+		function statusChage() {
+			ctx.emit('changeTodoItem', todoItem)
+		}
+
+		function deleteTodoItem() {
+			ctx.emit('delteTodoItem', todoItem)
+		}
+
+		return {
+			todoItem,
+			statusChage,
+			deleteTodoItem
+		}
+    }
+...
+```
+
+为了证明，我们勾选了待办事项之后，我们的`state`的确变更了，所以我们也准备了一个 `Finish.vue`的页面，这个页面的功能很简单，就是查看我们已经完成的待办事项：
+```ts
+<template>
+	<div class="finish">
+		<div class="card">
+			<div class="card-content">
+				<div class="card-content">
+					<FinishItem v-for="item in finishList" :key="item.id" :finishItem="item" />
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<script lang="ts">
+import { defineComponent, computed } from 'vue'
+import FinishItem from '../components/FinishItem.vue'
+import { useStore } from '../store/index'
+
+export default defineComponent({
+	name: 'Finish',
+	components: {
+		FinishItem
+	},
+	setup() {
+		const store = useStore()
+		const finishList = computed(() => store.state.todoList).value.filter((item) => item.done)
+
+		return {
+			finishList
+		}
+	}
+})
+</script>
+....
+```
