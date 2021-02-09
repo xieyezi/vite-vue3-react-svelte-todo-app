@@ -31,7 +31,7 @@ yarn svelte-dev
 ![1.png](https://i.loli.net/2021/02/05/ZAnfoHDNy35eMm7.png)
 
 ### 说在前面
-首先祝大家新年快乐！
+首先祝大家新年快乐哦！
 
 测试不同的前端构建工具一直以来是笔者的一个奇怪的嗜好，因为说实话,`webpack` 真的太难用了。上手成本高、插件鱼龙混杂、最难受的就是启动`dev`太慢，这些都是它的缺点。直到`vite`出现，笔者才原来前端开发可以如此丝滑。
 ### `Vite`是什么？
@@ -84,7 +84,7 @@ yarn svelte-dev
 基于这个目的，我们得保持一定的公平性，意思是我们在进行功能实现时，尽可能少的借助框架本身之外的工具。比如我们在实现`状态管理`时，我们尽量使用框架本身自带的功能来实现。
 
 好了，带着这两个目的，我们一起操作起来吧！
-#### Vue3
+#### Vue3 + Vite
 
 为了将三个`Todo App`都放在一个工程下面，我们采用了 [`lerna`](https://github.com/lerna/lerna) 来管理我们的三个`Todo App`。
 
@@ -143,7 +143,7 @@ export default defineConfig({
 })
 
 ```
-这里说一下，路由采用了最新的路由库：`vue-router 4.x` 。这个目录一眼便知，我们将`todo list`的状态管理，放到了`store`里面来管理。这里想着重讲一下状态管理，我们为了公平公正，所以我们这里不借助于`vuex`，既然现在`vue3`是基于`vue-composition-api`的，那我们可以利用这个特性来实现我们的状态管理。 首先我们需要创建一个`state`：
+这里说一下，路由采用了官方最新的路由库：`vue-router 4.x` 。这个目录一眼便知，我们将`todo list`的状态管理，放到了`store`里面来管理。这里想着重讲一下状态管理，我们为了公平公正，所以我们这里不借助于`vuex`，既然现在`vue3`是基于`vue-composition-api`的，那我们可以利用这个特性来实现我们的状态管理。 首先我们需要创建一个`state`：
 ```ts
 // store/state.ts
 import { reactive } from 'vue'
@@ -229,7 +229,7 @@ export const useStore = () => {
 
 ```
 这样，我们就完美的利用`vue3` 的最新特性实现状态管理，且不需要`vuex`了，最棒的是，这样做我们还完美的实现了`typescript`支持。
-> 有关利用vue3实现自身状态管理的更多内容，请查看这篇文章：[vuex4都beta了，vuex5还会远吗？](https://juejin.cn/post/6920118166224666632)
+> 如果想查看有关利用vue3实现自身状态管理的更多内容，请查看这篇文章：[vuex4都beta了，vuex5还会远吗？](https://juejin.cn/post/6920118166224666632)
 
 好了，最重要的部分说完了，我们来看看`Todo.vue`:
 ```ts
@@ -364,3 +364,57 @@ export default defineComponent({
 </script>
 ....
 ```
+这样的话，当我们在Todo页面点击了某项待办事项之后，我们就可以在finish页面查看已经完成的待办事项。
+到目前为止，咱们 `vue3` 版本的`Todo App`就完成了。
+我们来build一下，通过运行vite为我们提供的`vite build`命令，我们就可以打出`vue3`的`Todo App`：
+[vue3打包图片]()
+
+嗯，70多k，貌似不是特别大，接下来我们一起再来看看`vite + react` 的配合吧！
+
+#### React + Vite
+
+这里还是和`vue3`一样，`vite`为我们提供了基于`react`的`template`，我们只需执行一条脚本命令即可：
+
+```bash
+$ cd packages
+$ yarn create @vitejs/app react-todo --template react-ts
+```
+按照惯例，先看目录：
+```
+.
+|-- index.html
+|-- package-lock.json
+|-- package.json
+|-- src
+|   |-- App.scss
+|   |-- App.tsx
+|   |-- components
+|   |   |-- FinishItem
+|   |   |   |-- index.tsx
+|   |   |   |-- styles.scss
+|   |   |-- TodoItem
+|   |       |-- index.tsx
+|   |       |-- styles.scss
+|   |-- index.css
+|   |-- logo.svg
+|   |-- main.tsx
+|   |-- pages
+|   |   |-- Finish
+|   |   |   |-- index.tsx
+|   |   |   |-- styles.scss
+|   |   |-- Todo
+|   |       |-- index.tsx
+|   |       |-- styles.scss
+|   |-- router
+|   |   |-- index.tsx
+|   |   |-- styles.scss
+|   |-- store
+|       |-- index.tsx
+|       |-- reducer.ts
+|       |-- state.ts
+|-- tsconfig.json
+`-- vite.config.ts
+
+
+```
+我们之所以这么设置目录，是想和vue3的目录结构保持一致。
