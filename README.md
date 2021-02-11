@@ -605,7 +605,7 @@ export default defineConfig({
 	]
 })
 ```
-自此，我们就完美的将`svelte`和`vite`结合在一起了。
+至此，我们就完美的将`svelte`和`vite`结合在一起了。
 
 接下来我们来介绍一下`svelte`的状态管理。
 先在`store`目录下面新建一个`state`:
