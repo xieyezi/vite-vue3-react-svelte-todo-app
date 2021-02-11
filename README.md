@@ -1,4 +1,4 @@
-## vite-vue3-react-svelte-todo
+ ## vite-vue3-react-svelte-todo
 ### preview
 
 vue3: https://vite-vue3-todo.netlify.app
@@ -131,7 +131,7 @@ $ yarn create @vitejs/app vue3-todo --template vue-ts
 ├── tsconfig.json
 └── vite.config.ts
 ```
-现在vite2 为了适应更多的前端框架，所以它不会自动支持`vue3`，我们得安装一个官方提供的插件`@vitejs/plugin-vue`，并将其作为`vite` 的 `plugins`:
+现在`vite2` 为了适应更多的前端框架，所以它不会自动支持`vue3`，我们得安装一个官方提供的插件`@vitejs/plugin-vue`，并将其作为`vite` 的 `plugins`:
 ```ts
 // vite.config.ts
 import { defineConfig } from 'vite'
@@ -364,12 +364,17 @@ export default defineComponent({
 </script>
 ....
 ```
-这样的话，当我们在`Todo`页面点击了某项待办事项之后，我们就可以在`finish`页面查看已经完成的待办事项。
-到目前为止，咱们 `vue3` 版本的`Todo App`就完成了。
-我们来`build`一下，通过运行`vite`为我们提供的`vite build`命令，我们就可以打出`vue3`的`Todo App`：
-[vue3打包图片]()
+这样的话，当我们在`Todo`页面点击了某项待办事项之后，我们就可以在`finish`页面查看已经完成的待办事项了。
 
-嗯，70多k，貌似不是特别大，接下来我们一起再来看看`vite + react` 的配合吧！
+到目前为止，我们在没有使用第三方状态管理库的情况下，实现了状态管理，而且同时获得了很完美的`typescript`支持。我们 `vue3` 版本的`Todo App`就完成了。
+
+接下来我们来`build`一下，通过运行`vite`为我们提供的`vite build`命令，我们就可以打出`vue3`的`Todo App`：
+
+![vue3-todo](https://i.loli.net/2021/02/11/1XbdwAIen57pvkE.png)
+
+嗯，285k，貌似不是特别大，如果想查看线上效果，直接点击 [Vue3-Todo](https://vite-vue3-todo.netlify.app)。
+
+接下来我们一起再来看看`vite + react` 的配合吧！
 
 #### React + Vite
 
@@ -417,7 +422,132 @@ $ yarn create @vitejs/app react-todo --template react-ts
 
 
 ```
-我们之所以这么设置目录，是想和`vue3`的目录结构保持一致。由于功能都是一样的，所以我们只介绍一下不同的地方。     
-第一个就是路由，这里我们的路由使用的是`react-router-dom`，这是官方路由。
+我们之所以这么设置目录，是想和`vue3`的目录结构保持一致。
+和上面👆`vue3`一样，我们得安装一个官方提供的插件`@vitejs/plugin-react-refresh`，并将其作为`vite` 的 `plugins`:
+```ts
+// vite.config.ts
+import reactRefresh from '@vitejs/plugin-react-refresh'
+import { defineConfig } from 'vite'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+	plugins: [reactRefresh()]
+})
+
+
+```
+另外由于功能都是一样的，所以我们只介绍一下不同的地方。     
+第一个就是路由，这里我们的路由使用的是`react-router-dom`，这是`react`的官方路由。 
+
 第二个就是状态管理，这里我们采用了`context`和`useReducer`的方式。
-首先，我们
+
+首先，我们还是需要创建一个`state`：
+```ts
+// store/state.ts
+export interface TodoItemType {
+	id: number
+	done: boolean
+	content: string
+}
+
+export type StateType = {
+	todoList: Array<TodoItemType>
+}
+
+const state: StateType = {
+	todoList: [
+		{
+			id: 0,
+			done: false,
+			content: 'your first todo'
+		}
+	]
+}
+
+export const createStore = () => {
+	return state
+}
+
+```
+
+接着我们需要一些能够改变`state`的`reducer`:
+```ts
+// store/reducer.ts
+import { StateType, TodoItemType } from './state'
+
+export type ActionType =
+	| { type: 'NEW_TODO_ITEM'; todoItem: TodoItemType }
+	| { type: 'DELETE_TODO_ITEM'; todoItem: TodoItemType }
+	| { type: 'UPDATE_TODO_ITEM'; todoItem: TodoItemType }
+
+export const reducer = (state: StateType, action: ActionType) => {
+	switch (action.type) {
+		case 'NEW_TODO_ITEM':
+			return {
+				...state,
+				todoList: [...state.todoList, action.todoItem]
+			}
+		case 'DELETE_TODO_ITEM':
+			return {
+				...state,
+				todoList: state.todoList.filter((e) => e.id !== action.todoItem.id)
+			}
+		case 'UPDATE_TODO_ITEM':
+			let list = [...state.todoList]
+			list = list.map((item) => {
+				if (item.id === action.todoItem.id) {
+					item.done = !item.done
+				}
+				return item
+			})
+			return {
+				...state,
+				todoList: list
+			}
+	}
+}
+```
+然后我们通过`useReducer` 和 `Contenxt` 将`state`和`reducer`结合起来并暴露出去：
+```ts
+// store/index.tsx
+import { createStore, StateType } from './state'
+import { ActionType, reducer } from './reducer'
+import React, { useReducer, createContext } from 'react'
+
+const store = createStore()
+
+export type TodoContextType = {
+	state: StateType
+	dispatch: React.Dispatch<ActionType>
+}
+
+export const TodoContext = createContext<any>({})
+
+const TodoProvider: React.FC = (props) => {
+	const [state, dispatch] = useReducer(reducer, store)
+	const contextValue = { state, dispatch }
+
+	return <TodoContext.Provider value={contextValue}>{props.children}</TodoContext.Provider>
+}
+
+export default TodoProvider
+
+```
+我们用`Provider`包裹`useReducer`暴露出的值，提供给所有子组件。然后在`App.tsx`包裹一下`Router`组件即可。
+我们在`Todo/index.tsx`里面，就能通过`useContext`拿到`useReducer`提供的值：
+```ts
+// pages/Todo/index.tsx
+...
+const { state, dispatch } = useContext<TodoContextType>(TodoContext)
+...
+```
+这样我们就可以拿到`state`和`dispatch`了。
+通过`context`和`useReducer`的方式，我们完美了替代了`redux`。和`vue3`一样，我们没有使用第三方状态管理，至于对于`typescript`的支持嘛，那肯定不用我说，大家都知道`react`对于`typescript`的支持非常的棒了。
+
+接下来我们来`build`一下，通过运行`vite`为我们提供的`vite build`命令，我们就可以打出`react`的`Todo App`：
+
+![vue3-todo](https://i.loli.net/2021/02/11/1XbdwAIen57pvkE.png)
+
+嗯，285k，貌似不是特别大，如果想查看线上效果，直接点击 [React-Todo](https://vite-react-todo.netlify.app)。
+
+接下来我们一起再来看看`vite + svelte` 的配合吧！
