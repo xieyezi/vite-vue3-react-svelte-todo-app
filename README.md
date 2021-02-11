@@ -1,4 +1,3 @@
- ## vite-vue3-react-svelte-todo
 ### preview
 
 vue3: https://vite-vue3-todo.netlify.app
@@ -6,32 +5,13 @@ vue3: https://vite-vue3-todo.netlify.app
 react: https://vite-react-todo.netlify.app
 
 svelte: https://vite-svelte-todo.netlify.app
-### quick start 
-```
-cd vite-vue3-react-svelte-todo && yarn 
-
-```
-
-vue3:
-```
-yarn vue3-dev
-```
-
-react:
-```
-yarn react-dev
-```
-
-svelte:
-```
-yarn svelte-dev
-```
 ## Vite 会成为2021年最受欢迎的前端工具吗？ 
 
 ![1.png](https://i.loli.net/2021/02/05/ZAnfoHDNy35eMm7.png)
 
 ### 说在前面
-首先祝大家新年快乐哦！
+> 今天是大年初一，首先祝大家新年快乐，牛气冲天🎉🎉🎉
+> 这篇文章是带给大家的新年礼物！
 
 测试不同的前端构建工具一直以来是笔者的一个奇怪的嗜好，因为说实话,`webpack` 真的太难用了。上手成本高、插件鱼龙混杂、最难受的就是启动`dev`太慢，这些都是它的缺点。直到`vite`出现，笔者才原来前端开发可以如此丝滑。
 ### `Vite`是什么？
@@ -53,7 +33,6 @@ yarn svelte-dev
 - 它必须支持 `tree shaking`
 - 它必须支持各种 `CSS` 工具
 - 它支持导入 `SVG`，`PNG`，`JSON` 和其他我们想要导入的东西
-- 它支持`SSR`（服务端渲染）
 
 讲道理，其实这些要求不算过分吧。
 
@@ -433,8 +412,6 @@ import { defineConfig } from 'vite'
 export default defineConfig({
 	plugins: [reactRefresh()]
 })
-
-
 ```
 另外由于功能都是一样的，所以我们只介绍一下不同的地方。     
 第一个就是路由，这里我们的路由使用的是`react-router-dom`，这是`react`的官方路由。 
@@ -546,8 +523,268 @@ const { state, dispatch } = useContext<TodoContextType>(TodoContext)
 
 接下来我们来`build`一下，通过运行`vite`为我们提供的`vite build`命令，我们就可以打出`react`的`Todo App`：
 
-![vue3-todo](https://i.loli.net/2021/02/11/1XbdwAIen57pvkE.png)
+![react-todo.png](https://i.loli.net/2021/02/11/LMte8ERVmi1rWoT.png)
 
-嗯，285k，貌似不是特别大，如果想查看线上效果，直接点击 [React-Todo](https://vite-react-todo.netlify.app)。
+363k，好家伙，有点大啊，如果想查看线上效果，直接点击 [React-Todo](https://vite-react-todo.netlify.app)。
 
 接下来我们一起再来看看`vite + svelte` 的配合吧！
+
+#### Svelte + Vite
+
+对于`svelte`， `vite` 官方 `template` ，所以我们得自己动手了。
+虽然没有官方 `template`，但是我们可以依葫芦画瓢。首先我们在`packages`目录下面新建一个目录：`svelte-todo`，接着新建`public`和`src`目录，`index.html`、`tsconfig.json`、`vite.config.ts`文件。之后我们在`src`目录下面新建我们需要的目录和文件，文件目录就变成了这样：			
+```
+.
+├── index.html
+├── node_modules
+├── package.json
+├── public
+│   └── favicon.ico
+├── src
+│   ├── App.css
+│   ├── App.svelte
+│   ├── assets
+│   │   └── logo.svg
+│   ├── components
+│   │   ├── FinishItem.svelte
+│   │   └── TodoItme.svelte
+│   ├── main.ts
+│   ├── pages
+│   │   ├── Finish.svelte
+│   │   └── Todo.svelte
+│   ├── router
+│   │   └── index.svelte
+│   ├── store
+│   │   ├── action.ts
+│   │   ├── index.ts
+│   │   └── state.ts
+│   └── types.d.ts
+├── tsconfig.json
+└── vite.config.ts
+```
+既然要使用 `vite + svelte`，那我们就需要安装`vite`和`svelte`:
+```json
+"devDependencies": {
+    "@tsconfig/svelte": "^1.0.10",
+    "svelte-preprocess": "^4.6.3",
+    "typescript": "^4.1.3",
+    "vite": "^2.0.0-beta.50",
+    "vite-plugin-svelte": "https://github.com/benmccann/vite-plugin-svelte"
+  },
+  "dependencies": {
+    "svelte": "^3.32.0",
+    "svelte-routing": "^1.5.0"
+  }
+```
+这里和上面两个框架一样，路由我们都采用了相应的官方路由，`svelte`采用了`svelte-routing`。查看了`svelte`的教程，如果想要获得`typescript`的支持，我们需要安装`@tsconfig/svelte`和`svelte-preprocess`，并在根目录创建一个`svelte.config.js`：
+```js
+const preprocess = require('svelte-preprocess')
+
+module.exports = { preprocess: preprocess() }
+
+```
+另外，如果我们需要`HMR`的功能，这里同样得安装一个`plugins`,`vite-plugin-svelte`:
+```ts
+// vite.config.ts
+import { defineConfig } from 'vite'
+import svelte from 'vite-plugin-svelte'
+import sveltePreprocess from 'svelte-preprocess'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+	plugins: [
+		svelte({
+			preprocess: sveltePreprocess(),
+			compilerOptions: {
+				dev: true
+			},
+			hot: true,
+			emitCss: false
+		})
+	]
+})
+```
+自此，我们就完美的将`svelte`和`vite`结合在一起了。
+
+接下来我们来介绍一下`svelte`的状态管理。
+先在`store`目录下面新建一个`state`:
+```ts
+// store/state.ts
+import { writable } from 'svelte/store'
+export interface TodoItemType {
+	id: number
+	done: boolean
+	content: string
+}
+
+export type StateType = {
+	todoList: Array<TodoItemType>
+}
+
+const state: StateType = {
+	todoList: [
+		{
+			id: 0,
+			done: false,
+			content: 'your first todo'
+		}
+	]
+}
+export const createStore = () => {
+	return writable(state)
+}
+```
+`svelte`为我们提供了`writable`，将我们的`state`包裹起来，这样就实现了响应式。
+
+接下来我们来创建一些变更`state`的`action`:
+```ts
+// store/action.ts
+import type { Writable } from 'svelte/store'
+import type { StateType, TodoItemType } from './state'
+
+function addNewTodoItem(state: Writable<StateType>) {
+	return (newItem: TodoItemType) => {
+		state.update((state) => {
+			return {
+				...state,
+				todoList: [...state.todoList, newItem]
+			}
+		})
+	}
+}
+
+function delteTodoItem(state: Writable<StateType>) {
+	return (item: TodoItemType) => {
+		state.update((state) => {
+			return {
+				...state,
+				todoList: state.todoList.filter((e) => e.id !== item.id)
+			}
+		})
+	}
+}
+
+// svelte do not change state by action ,beacase all of them is reactivity,it's amazing!
+
+// function changeTodoItemStatus(state: Writable<StateType>) {
+// 	return (todoItem: TodoItemType) => {
+// 		state.update((state) => {
+// 			let list = [...state.todoList]
+// 			// list.map((item) => {
+// 			// 	if (item.id === todoItem.id) item.done = !item.done
+// 			// 	return item
+// 			// })
+// 			return {
+// 				...state,
+// 				todoList: [...list]
+// 			}
+// 		})
+// 	}
+// }
+
+export function createAction(state: Writable<StateType>) {
+	return {
+		addNewTodoItem: addNewTodoItem(state),
+		delteTodoItem: delteTodoItem(state)
+		// changeTodoItemStatus: changeTodoItemStatus(state)
+	}
+}
+```
+> `todo item`的时候，不需要通过action，是因为被`writable`包裹的值，是具有响应式的，这一点很棒！
+
+然后我们将`state`和`action`结合起来：
+```ts
+// store/index.ts
+import { createAction } from './action'
+import { createStore } from './state'
+
+const state = createStore()
+const action = createAction(state)
+
+export const useStore = () => {
+	return {
+		state,
+		action
+	}
+}
+```
+
+接着我们来看看在`svelte`组件里面如何拿到`state`和`action`:
+```ts
+// pages/Todo.svelte
+...
+const store = useStore()
+	const { state, action } = store
+	let newItemContent = ''
+	let todoList: Array<TodoItemType> = []
+
+	state.subscribe((state) => {
+		todoList = state.todoList
+	})
+...
+```
+这样，我们就完美的拿到了`state`和`action`。
+另外还有一点，值得提一下。在变更`todo item`时，我们如何从`TodoItem.svelte`通知父组件`Todo.svelte`呢？
+
+`svelte`为我们提供了
+```ts
+// components/TodoItem.svelte
+import { createEventDispatcher } from 'svelte'
+
+const dispatch = createEventDispatcher()
+
+```
+通过这个`dispatch`，我们可以派发一个`action`到父组件:
+```ts
+function deleteTodoItem() {
+	dispatch('delteTodoItem', todoItem)
+}
+```
+在父组件，通过同名`action`，我们就能拿到从子组件携带的参数：
+
+```ts
+// pages/Todo.svelte
+...
+function delteTodoItem(e: CustomEvent) {
+	action.delteTodoItem(e.detail)
+}
+...
+<div class="card-content">
+	{#each todoList as item}
+		<TodoItem todoItem={item} on:delteTodoItem={delteTodoItem} />
+	{/each}
+</div>
+...
+```
+发现没有，这种方式和vue的`emit`其实一个样。
+
+接下来我们来`build`一下，通过运行`vite`为我们提供的`vite build`命令，我们就可以打出`svelte`的`Todo App`：
+
+![svelte-todo.png](https://i.loli.net/2021/02/11/kJhIUtflYyoaA8x.png)
+
+嗯，262k，是他们三个中最小的。
+
+### 总结
+
+我们先来回顾一下，刚刚我们提出的要求：
+
+- 它一定要够快（不会随着项目增大而变慢）
+- 它必须支持 `Typescript`
+- 它必须支持现在主流的前端框架（包括`vue`、`react`等）
+- 它必须支持`HMR`（热模块替换）
+- 它必须支持 `tree shaking`
+- 它必须支持各种 `CSS` 工具
+- 它支持导入 `SVG`，`PNG`，`JSON` 和其他我们想要导入的东西
+
+现在看来，我们知道，这些要求，`vite`都满足了。事实上，`vite`带给我们的，还不止这些，它还支持`SSR`等功能。
+
+> 此时此刻，是大年三十的最后一刻，希望小伙伴们新年快乐！
+
+刚刚我们说了还有一个目的，我们来对比一下`vue3`、`react`、`svelte`。
+
+从构建体积来看，`svelete` 优于 `vue3` 优于 `react`。  
+从对于`typescript`的支持来看, `react` 优于 `vue3` 优于 `svelete`。    
+从状态管理来看，`svelte` 优于 `vue3` 优于 `react`。
+从路由管理来看，`svelte` 等于 `vue3` 等于 `react`。
+
+那么回到标题的问题，"Vite 会成为2021年最受欢迎的前端工具吗？"，相信大家心中已经有了答案。
