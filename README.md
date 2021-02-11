@@ -511,6 +511,7 @@ export default TodoProvider
 
 ```
 我们用`Provider`包裹`useReducer`暴露出的值，提供给所有子组件。然后在`App.tsx`包裹一下`Router`组件即可。
+
 我们在`Todo/index.tsx`里面，就能通过`useContext`拿到`useReducer`提供的值：
 ```ts
 // pages/Todo/index.tsx
