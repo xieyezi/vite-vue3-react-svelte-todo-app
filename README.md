@@ -785,7 +785,7 @@ function delteTodoItem(e: CustomEvent) {
 
 从构建体积来看，`svelete` 优于 `vue3` 优于 `react`。  
 从状态管理来看，`svelte` 优于 `vue3` 优于 `react`。     
-从路由管理来看，`svelte` 等于 `vue3` 等于 `react`。
+从路由管理来看，`svelte` 等于 `vue3` 等于 `react`。     
 从对于`typescript`的支持来看, `react` 优于 `vue3` 优于 `svelete`。 
 
 那么回到标题的问题，"Vite 会成为2021年最受欢迎的前端工具吗？"，相信大家心中已经有了答案。
