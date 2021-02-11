@@ -364,9 +364,9 @@ export default defineComponent({
 </script>
 ....
 ```
-这样的话，当我们在Todo页面点击了某项待办事项之后，我们就可以在finish页面查看已经完成的待办事项。
+这样的话，当我们在`Todo`页面点击了某项待办事项之后，我们就可以在`finish`页面查看已经完成的待办事项。
 到目前为止，咱们 `vue3` 版本的`Todo App`就完成了。
-我们来build一下，通过运行vite为我们提供的`vite build`命令，我们就可以打出`vue3`的`Todo App`：
+我们来`build`一下，通过运行`vite`为我们提供的`vite build`命令，我们就可以打出`vue3`的`Todo App`：
 [vue3打包图片]()
 
 嗯，70多k，貌似不是特别大，接下来我们一起再来看看`vite + react` 的配合吧！
@@ -417,4 +417,7 @@ $ yarn create @vitejs/app react-todo --template react-ts
 
 
 ```
-我们之所以这么设置目录，是想和vue3的目录结构保持一致。
+我们之所以这么设置目录，是想和`vue3`的目录结构保持一致。由于功能都是一样的，所以我们只介绍一下不同的地方。     
+第一个就是路由，这里我们的路由使用的是`react-router-dom`，这是官方路由。
+第二个就是状态管理，这里我们采用了`context`和`useReducer`的方式。
+首先，我们
