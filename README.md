@@ -727,7 +727,7 @@ const store = useStore()
 这样，我们就完美的拿到了`state`和`action`。
 另外还有一点，值得提一下。在变更`todo item`时，我们如何从`TodoItem.svelte`通知父组件`Todo.svelte`呢？
 
-`svelte`为我们提供了
+`svelte`为我们提供了 `createEventDispatcher`:
 ```ts
 // components/TodoItem.svelte
 import { createEventDispatcher } from 'svelte'
