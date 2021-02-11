@@ -484,7 +484,7 @@ export const reducer = (state: StateType, action: ActionType) => {
 	}
 }
 ```
-然后我们通过`useReducer` 和 `Contenxt` 将`state`和`reducer`结合起来并暴露出去：
+然后我们通过`useReducer` 和 `Contenxt` 将`state`、`reducer`结合起来并暴露出去：
 ```ts
 // store/index.tsx
 import { createStore, StateType } from './state'
