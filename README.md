@@ -532,7 +532,7 @@ const { state, dispatch } = useContext<TodoContextType>(TodoContext)
 
 #### Svelte + Vite
 
-对于`svelte`， `vite` 官方 `template` ，所以我们得自己动手了。
+对于`svelte`， `vite` 没有提供官方 `template` ，所以我们得自己动手了。
 虽然没有官方 `template`，但是我们可以依葫芦画瓢。首先我们在`packages`目录下面新建一个目录：`svelte-todo`，接着新建`public`和`src`目录，`index.html`、`tsconfig.json`、`vite.config.ts`文件。之后我们在`src`目录下面新建我们需要的目录和文件，文件目录就变成了这样：			
 ```
 .
