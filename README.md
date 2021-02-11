@@ -584,7 +584,7 @@ const preprocess = require('svelte-preprocess')
 module.exports = { preprocess: preprocess() }
 
 ```
-另外，如果我们需要`HMR`的功能，这里同样得安装一个`plugins`,`vite-plugin-svelte`:
+另外，如果我们需要`HMR`的功能，这里同样得安装一个`plugin`,`vite-plugin-svelte`:
 ```ts
 // vite.config.ts
 import { defineConfig } from 'vite'
